@@ -6,6 +6,9 @@ import { StockInitialValue } from "../utility/interfaces/IRoute.ts";
 const getStocks = async (): Promise<AxiosResponse<IResponse<{}>>> =>
     httpClient.get<IResponse<{}>>(`getStocks`);
 
+const getRandomStock = async (): Promise<AxiosResponse<IResponse<{}>>> =>
+    httpClient.get<IResponse<{}>>(`getRandomStock`);
+
 const getStockById = async (id: number): Promise<AxiosResponse<IResponse<{}>>> =>
     httpClient.post<IResponse<{}>>(`getStockById`, { id });
 
@@ -28,7 +31,8 @@ const StockApi = {
     addNewStock: addNewStock,
     deleteStock: deleteStock,
     editStock: editStock,
-    deleteMultipleStocks: deleteMultipleStocks
+    deleteMultipleStocks: deleteMultipleStocks,
+    getRandomStock: getRandomStock
 };
 
 export default StockApi;

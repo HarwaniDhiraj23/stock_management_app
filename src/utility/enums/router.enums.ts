@@ -6,5 +6,6 @@ export enum RoutePaths {
   ResetPassword = "/resetPassword",
   Sidebar = "/sidebar",
   Settings = "/setting",
-  Stocks = "/Stocks"
+  Stocks = "/Stocks",
+  Notification = "/notification"
 }

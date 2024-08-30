@@ -1,0 +1,8 @@
+export const unitedStates = require("./unitedStates.png")
+export const sweden = require("./sweden.png")
+export const netherlands = require("./netherlands.png")
+export const japan = require("./japan.png")
+export const italy = require("./italy.png")
+export const france = require("./france.png")
+export const canada = require("./canada.png")
+export const germany = require("./germany.png")

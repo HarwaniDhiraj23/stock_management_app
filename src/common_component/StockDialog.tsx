@@ -114,6 +114,7 @@ export default function SimpleDialog(props: SimpleDialogProps) {
             handleBlur,
             handleChange,
             handleSubmit,
+            isValid,
           }) => (
             <MainForm onSubmit={handleSubmit}>
               <CustomTextField
@@ -150,11 +151,7 @@ export default function SimpleDialog(props: SimpleDialogProps) {
                   variant="contained"
                   color="primary"
                   type="submit"
-                  disabled={
-                    !!Object.keys(errors).length ||
-                    !values.name ||
-                    !values.current_price
-                  }
+                  disabled={!isValid}
                 >
                   Save
                 </SaveButton>

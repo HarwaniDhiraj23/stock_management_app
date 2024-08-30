@@ -78,6 +78,7 @@ const ForgotPassword: React.FC = () => {
           handleBlur,
           handleChange,
           handleSubmit,
+          isValid,
         }) => (
           <MainForm onSubmit={handleSubmit}>
             <InputLabelStyle>Your Email</InputLabelStyle>
@@ -116,7 +117,7 @@ const ForgotPassword: React.FC = () => {
               color="primary"
               type="submit"
               fullWidth
-              disabled={!values.email}
+              disabled={!isValid}
             >
               Recover Password
             </ResetButton>

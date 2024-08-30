@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { IRoute } from "../utility/interfaces/IRoute";
 import { RoutePaths } from "../utility/enums/router.enums.ts";
 import { Box } from "@material-ui/core";
+import Notification from "../common_component/Notification.tsx";
 const Stocks = lazy(() => import("../pages/Stocks.tsx"));
 const SignUp = lazy(() => import("../pages/SignUp.tsx"));
 const SignIn = lazy(() => import("../pages/SignIn.tsx"));
@@ -64,6 +65,13 @@ export const routeList: IRoute[] = [
     id: 8,
     path: RoutePaths.Stocks,
     component: Stocks,
+    exact: true,
+    isProtectedRoute: false,
+  },
+  {
+    id: 9,
+    path: RoutePaths.Notification,
+    component: Notification,
     exact: true,
     isProtectedRoute: false,
   },
