@@ -64,3 +64,18 @@ export interface StockInitialValue {
     name?: string
     current_price?: number
 }
+
+export interface StockData {
+    stock_name: string;
+    current_value: number;
+    status: "low" | "high";
+    average: string;
+    day: string[];
+    day_value: number[];
+    week: string[];
+    week_value: number[];
+    month: string[];
+    month_value: number[];
+    year: number[];
+    year_value: number[];
+}

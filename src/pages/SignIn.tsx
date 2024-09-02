@@ -17,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SignInInitialValue } from "../utility/interfaces/IRoute.ts";
 import userService from "../service/user-service.ts";
 import LoginLayout from "../common_component/CommonLayout.tsx";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
 
 const SignIn: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,12 +45,16 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     resetForm();
-    const result = await userService.loginUser({
-      email: values.email,
-      password: values.password,
-    });
-    localStorage.setItem("token", result.data?.token);
-    navigate(RoutePaths.Dashboard);
+    try {
+      const result = await userService.loginUser({
+        email: values.email,
+        password: values.password,
+      });
+      localStorage.setItem("token", result.data?.token);
+      navigate(RoutePaths.Dashboard);
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
   };
   const HeaderTypography = styled(Typography)({
     fontSize: "24px",

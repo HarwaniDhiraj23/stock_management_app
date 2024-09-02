@@ -14,6 +14,7 @@ import { ForgotPasswordInitialValue } from "../utility/interfaces/IRoute.ts";
 import userService from "../service/user-service.ts";
 import { useNavigate } from "react-router-dom";
 import LoginLayout from "../common_component/CommonLayout.tsx";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
 
 const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
@@ -22,11 +23,14 @@ const ForgotPassword: React.FC = () => {
   };
   const handleSubmit = async (values, { resetForm }) => {
     resetForm();
-
-    await userService.forgotPassword({
-      email: values.email,
-    });
-    navigate(RoutePaths.SignIn);
+    try {
+      await userService.forgotPassword({
+        email: values.email,
+      });
+      navigate(RoutePaths.SignIn);
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
   };
   const TypoTitle = styled(Typography)({
     fontSize: "24px",

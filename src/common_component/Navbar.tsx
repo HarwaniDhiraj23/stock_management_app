@@ -22,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { RoutePaths } from "../utility/enums/router.enums.ts";
 import userService from "../service/user-service.ts";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
 
 const MenuBox = styled(Box)({
   "&:hover": {
@@ -77,17 +78,15 @@ export default function Navbar({ SideBarOpen, handleDrawerOpen }: NavbarProps) {
   };
 
   const open = Boolean(anchorEl);
-
+  const fetchData = async () => {
+    try {
+      const userProfile = await userService.getUserProfile();
+      setProfileData(userProfile.data.data[0]);
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userProfile = await userService.getUserProfile();
-        setProfileData(userProfile.data.data[0]);
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-
     fetchData();
   }, []);
 

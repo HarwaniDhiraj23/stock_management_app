@@ -26,6 +26,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SignUpInitialValue } from "../utility/interfaces/IRoute.ts";
 import userService from "../service/user-service.ts";
 import LoginLayout from "../common_component/CommonLayout.tsx";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
 
 const SignUp: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,13 +48,17 @@ const SignUp: React.FC = () => {
     password: "",
   };
   const handleSubmit = async (values, { resetForm }) => {
-    resetForm();
-    await userService.createUser({
-      full_name: values.full_name,
-      email: values.email,
-      password: values.password,
-    });
-    navigate(RoutePaths.SignIn);
+    try {
+      resetForm();
+      await userService.createUser({
+        full_name: values.full_name,
+        email: values.email,
+        password: values.password,
+      });
+      navigate(RoutePaths.SignIn);
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
   };
   const FormError = styled(FormHelperText)({
     marginLeft: "-10px",

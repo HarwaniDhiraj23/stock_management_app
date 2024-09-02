@@ -5,6 +5,8 @@ import { ShareValidationSchema } from "../utility/validations/signUpValidation.t
 import CustomTextField from "./CustomTextField.tsx";
 import { StockInitialValue } from "../utility/interfaces/IRoute.ts";
 import StockApi from "../service/stock-service.ts";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
+import { useNavigate } from "react-router-dom";
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -14,6 +16,7 @@ export interface SimpleDialogProps {
 }
 
 export default function SimpleDialog(props: SimpleDialogProps) {
+  const navigate = useNavigate();
   const { open, onClose, id, onSave } = props;
   const [stockData, setStockData] = useState<StockInitialValue>({});
   const initialValue: StockInitialValue = {
@@ -28,11 +31,19 @@ export default function SimpleDialog(props: SimpleDialogProps) {
       current_price: values.current_price,
     };
     if (props.id) {
-      await StockApi.editStock(data);
-      onSave?.();
+      try {
+        await StockApi.editStock(data);
+        onSave?.();
+      } catch (error) {
+        handleRedirect(error, navigate);
+      }
     } else {
-      await StockApi.addNewStock(data);
-      onSave?.();
+      try {
+        await StockApi.addNewStock(data);
+        onSave?.();
+      } catch (error) {
+        handleRedirect(error, navigate);
+      }
     }
   };
   const handleClose = () => {

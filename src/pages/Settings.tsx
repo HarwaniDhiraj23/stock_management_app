@@ -25,13 +25,18 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import userService from "../service/user-service.ts";
+import { notification_data } from "../utility/constant/settingConstants.ts";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
+import { useNavigate } from "react-router-dom";
 interface State {
   account_activity: boolean;
   meetups: boolean;
   company_news: boolean;
 }
 function Settings() {
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState<UserInfoInitialValue>({});
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [isDateValid, setIsDateValid] = useState(false);
@@ -69,9 +74,17 @@ function Settings() {
     };
 
     if (profileData?.user_id === null) {
-      await userService.createUserInfo(data);
+      try {
+        await userService.createUserInfo(data);
+      } catch (error) {
+        handleRedirect(error, navigate);
+      }
     } else {
-      await userService.updateUserDetail(data);
+      try {
+        await userService.updateUserDetail(data);
+      } catch (error) {
+        handleRedirect(error, navigate);
+      }
     }
 
     resetForm();
@@ -94,7 +107,7 @@ function Settings() {
         [notificationKey]: notificationValue,
       });
     } catch (error) {
-      console.error("Failed to update notification status:", error);
+      handleRedirect(error, navigate);
     }
   };
 
@@ -149,29 +162,6 @@ function Settings() {
     lineHeight: 1,
   };
 
-  const notification_data = [
-    {
-      id: 1,
-      title: "Company News",
-      description: "Get Rocket news, announcements, and product updates",
-      stateKey: "company_news",
-    },
-    {
-      id: 2,
-      title: "Account Activity",
-      description:
-        "Get important notifications about you or activity you've missed",
-      stateKey: "account_activity",
-    },
-    {
-      id: 3,
-      title: "Meetups Near You",
-      description:
-        "Get an email when a Dribble Meetup is posted close to my location",
-      stateKey: "meetups",
-    },
-  ];
-
   const handleChangeGender = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedGender(event.target.value as string);
   };
@@ -200,7 +190,7 @@ function Settings() {
         setIsDateValid(false);
       }
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      handleRedirect(error, navigate);
     }
   };
   const handleDateChange = (date_selected) => {
@@ -221,13 +211,21 @@ function Settings() {
     if (file) {
       setSelectedImage(file);
     }
-    if (name === "profile_pic") {
-      await userService.uploadProfilePic(file);
-      fetchData();
-    } else {
-      await userService.uploadCoverPic(file);
-      fetchData();
-    }
+    const uploadFile = async () => {
+      const uploadFunction =
+        name === "profile_pic"
+          ? userService.uploadProfilePic
+          : userService.uploadCoverPic;
+
+      try {
+        await uploadFunction(file);
+        fetchData();
+      } catch (error) {
+        handleRedirect(error, navigate);
+      }
+    };
+
+    uploadFile();
   };
 
   useEffect(() => {

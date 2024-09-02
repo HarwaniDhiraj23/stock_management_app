@@ -24,7 +24,7 @@ import {
 import {
   drawerWidth,
   closedDrawerWidth,
-} from "../utility/constant/SidebarConstants.ts";
+} from "../utility/constant/sidebarConstants.ts";
 import { RoutePaths } from "../utility/enums/router.enums.ts";
 
 const useStyles = makeStyles<Theme>((theme) => ({

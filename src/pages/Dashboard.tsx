@@ -31,6 +31,7 @@ import {
   FiberManualRecordSharp,
   Visibility,
 } from "@material-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 import {
   AcquisitionData,
@@ -43,6 +44,8 @@ import {
   teamMembers,
   teamProgress,
 } from "../utility/constant/DashboardConstants.tsx";
+import { StockData } from "../utility/interfaces/IRoute.ts";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
 const MainBox = styled(Box)({
   backgroundColor: "#ACEBFD",
   padding: "20px",
@@ -116,6 +119,109 @@ const SalesBox = styled(Box)({
   gap: 10,
   margin: "10px",
 });
+const MainSalesBox = styled(Box)({
+  margin: "20px 10px 10px 10px",
+  gap: 20,
+  display: "flex",
+  flexDirection: "row",
+});
+const SubSalesBox = styled(Box)({
+  display: "flex",
+  flex: 2,
+  backgroundColor: "#F5F8FB",
+  borderRadius: "10px",
+  flexDirection: "column",
+  gap: 20,
+});
+const ThirdSalesBox = styled(Box)({
+  display: "flex",
+  flex: 1,
+  backgroundColor: "#F5F8FB",
+  borderRadius: "10px",
+  flexDirection: "column",
+  gap: "20px",
+});
+const GlobalRankMainBox = styled(Box)({
+  display: "flex",
+  gap: 20,
+  width: "100%",
+});
+const GlobalRankBox = styled(Box)({
+  display: "flex",
+});
+const GlobalRankSubBox = styled(Box)({
+  marginLeft: "10px",
+});
+const PageVisitMainBox = styled(Box)({
+  borderRadius: "10px",
+  width: "100%",
+});
+const TeamMemberMainBox = styled(Box)({
+  display: "flex",
+  gap: 20,
+});
+const TeamMemberSubBox = styled(Box)({
+  backgroundColor: "#FFFFFF",
+  borderRadius: "10px",
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+});
+const AcquisitionBox = styled(Box)({
+  padding: "20px 20px 15px 20px",
+});
+const AcquisitionSubBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  fontSize: "20px",
+});
+const TeamMemberTitleBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+});
+const ProgressMainBox = styled(Box)({
+  padding: "10px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  margin: "10px 0 10px 0",
+});
+const VisitImage = styled("img")({
+  width: "30px",
+  height: "30px",
+});
+const ProgressBox = styled(Box)({
+  width: "100%",
+  marginLeft: "10px",
+  marginRight: "10px",
+});
+const PageVisitSubBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  backgroundColor: "#FFF",
+  borderTopLeftRadius: "10px",
+  borderTopRightRadius: "10px",
+});
+const PageVisitHeadTitle = styled(TableHead)({
+  backgroundColor: "#F2F4F6",
+});
+const PageVisitTitle = styled(Typography)({
+  padding: "20px",
+  fontWeight: "bold",
+});
+const PageVisitButton = styled(Button)({
+  textTransform: "capitalize",
+  color: "#FFF",
+  backgroundColor: "#1D2030",
+  marginRight: "20px",
+  borderRadius: "10px",
+});
 const SalesMainBox = styled(Box)({
   backgroundColor: "#FFFFFF",
   borderRadius: "10px",
@@ -124,6 +230,108 @@ const SalesMainBox = styled(Box)({
   flex: 1,
   height: "600px",
 });
+const NotificationMainBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+const VisitProfileName = styled(Typography)({
+  display: "flex",
+  gap: "10px",
+});
+const VisitProfileData = styled(Typography)({
+  color: "gray",
+});
+const NotificationStepper = styled(Stepper)({
+  overflowY: "auto",
+  borderBottomLeftRadius: "10px",
+  borderBottomRightRadius: "10px",
+});
+const NotificationTitle = styled(Typography)({
+  padding: "20px",
+  fontWeight: "bold",
+});
+const NotificationButton = styled(Button)({
+  textTransform: "capitalize",
+  marginRight: "20px",
+});
+const NotificationViewIcon = styled(Visibility)({
+  marginRight: "5px",
+});
+const TopAuthorTitle = styled(Typography)({
+  padding: "20px",
+  fontWeight: "bold",
+});
+const TopAuthorBox = styled(Box)({
+  padding: "10px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+});
+const EventViewButton = styled(Button)({
+  textTransform: "capitalize",
+  padding: "15px 0 15px 0",
+});
+const TeamMemberBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+});
+const EventBox = styled(Box)({
+  borderRadius: "10px",
+  marginLeft: "20px",
+});
+const EventDataBox = styled(Box)({
+  marginLeft: "50px",
+});
+const EventMainBox = styled(Box)({
+  backgroundColor: "#E11D48",
+  color: "#FFF",
+  width: "50px",
+  height: "20px",
+  borderTopRightRadius: "10px",
+  borderTopLeftRadius: "10px",
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "center",
+});
+const EventSubBox = styled(Box)({
+  backgroundColor: "#F2F4F6",
+  width: "50px",
+  height: "40px",
+  borderBottomRightRadius: "10px",
+  borderBottomLeftRadius: "10px",
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "center",
+  fontSize: "20px",
+});
+const TeamMemberImg = styled("img")({
+  width: "35px",
+  height: "35px",
+  borderRadius: "10px",
+  marginRight: "10px",
+});
+const TeamMemberStatusBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "flex-start",
+});
+const TopAuthorMainBox = styled(Box)({
+  display: "flex",
+});
+const TopAuthorImg = styled("img")({
+  width: "50px",
+  height: "50px",
+  borderRadius: "10px",
+  marginRight: "10px",
+});
+const TopAuthorDivider = styled(Divider)({
+  margin: "0px 10px 0px 10px",
+});
+
 const SalesTitle = styled(Typography)({
   paddingLeft: "20px",
   paddingTop: "10px",
@@ -164,14 +372,20 @@ const ChartDayText = styled(Typography)({
 });
 
 function Dashboard() {
-  const [showSales, setSales] = useState<any>([]);
+  const navigate = useNavigate();
+  const [showSales, setShowSales] = useState<StockData[]>([]);
   const [alignment, setAlignment] = useState<string>("day");
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
       const result = await StockApi.getRandomStock();
-      setSales(result.data.data);
-    };
+      setShowSales(result.data.data as StockData[]);
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -277,7 +491,7 @@ function Dashboard() {
         </HeaderBox>
         <LineChart data={data} chartType="line" labels={true} />
       </MainBox>
-      <SubBox style={{}}>
+      <SubBox>
         <Grid container spacing={2}>
           {[1, 2, 3].map((index) => (
             <Grid item xs={12} sm={12} md={6} lg={4} xl={2} key={index}>
@@ -315,16 +529,14 @@ function Dashboard() {
       </SubBox>
       <SalesBox>
         <Grid container spacing={2} style={{ marginTop: "20px" }}>
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <SalesMainBox>
               <SalesTitle variant="h6">Weekly Sales</SalesTitle>
               <SalesAvgTitle variant="body2">28 Daily Avg.</SalesAvgTitle>
               <Divider />
               <SalesDataMainBox>
                 <SalesDataMainBox>
-                  <Typography variant="h3" style={{ fontWeight: "bold" }}>
-                    $456,678
-                  </Typography>
+                  <ChartCurrentText variant="h3">$456,678</ChartCurrentText>
                   <Typography variant="body1">
                     Total Themesberg Sales
                   </Typography>
@@ -336,37 +548,18 @@ function Dashboard() {
               </SalesDataMainBox>
             </SalesMainBox>
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <SalesMainBox>
-              <Typography
-                variant="h6"
-                style={{ padding: "20px", fontWeight: "bold" }}
-              >
-                Top Author Earnings
-              </Typography>
+              <TopAuthorTitle variant="h6">Top Author Earnings</TopAuthorTitle>
               <Divider />
               <Box>
                 {profiles.map((profile, index) => (
                   <>
-                    <Box
-                      style={{
-                        padding: "10px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Box style={{ display: "flex" }}>
-                        <img
+                    <TopAuthorBox>
+                      <TopAuthorMainBox>
+                        <TopAuthorImg
                           src="https://demo.themesberg.com/volt-pro-react/static/media/profile-picture-1.508e07ee.jpg"
                           alt="img"
-                          style={{
-                            width: "50px",
-                            height: "50px",
-                            borderRadius: "10px",
-                            marginRight: "10px",
-                          }}
                         />
 
                         <Box>
@@ -375,56 +568,32 @@ function Dashboard() {
                             {profile.role}
                           </Typography>
                         </Box>
-                      </Box>
+                      </TopAuthorMainBox>
                       <Box>
                         <Typography>{profile.salary}</Typography>
                       </Box>
-                    </Box>
-                    {index < profiles.length - 1 && (
-                      <Divider style={{ margin: "0px 10px 0px 10px" }} />
-                    )}
+                    </TopAuthorBox>
+                    {index < profiles.length - 1 && <TopAuthorDivider />}
                   </>
                 ))}
               </Box>
             </SalesMainBox>
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <SalesMainBox>
-              <Box
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  style={{ padding: "20px", fontWeight: "bold" }}
-                >
+              <NotificationMainBox>
+                <NotificationTitle variant="h6">
                   Notifications
-                </Typography>
-                <Button
-                  style={{
-                    textTransform: "capitalize",
-                    marginRight: "20px",
-                  }}
-                >
-                  <Visibility style={{ marginRight: "5px" }} />
+                </NotificationTitle>
+                <NotificationButton>
+                  <NotificationViewIcon />
                   View All
-                </Button>
-              </Box>
+                </NotificationButton>
+              </NotificationMainBox>
               <Divider />
-              <Stepper
-                orientation="vertical"
-                style={{
-                  overflowY: "auto",
-                  borderBottomLeftRadius: "10px",
-                  borderBottomRightRadius: "10px",
-                }}
-              >
+              <NotificationStepper orientation="vertical">
                 {steps.map((steps, index) => (
-                  <Step key={index} active={true} completed={true}>
+                  <Step key={steps.id} active={true} completed={true}>
                     <StepLabel>{steps.icon}</StepLabel>
                     <StepContent>
                       <Typography>{steps.data}</Typography>
@@ -432,591 +601,298 @@ function Dashboard() {
                     </StepContent>
                   </Step>
                 ))}
-              </Stepper>
+              </NotificationStepper>
             </SalesMainBox>
           </Grid>
         </Grid>
       </SalesBox>
-      <Box
-        style={{
-          margin: "20px 10px 10px 10px",
-          gap: 20,
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <Box
-          style={{
-            display: "flex",
-            flex: 2,
-            backgroundColor: "#F5F8FB",
-            borderRadius: "10px",
-            flexDirection: "column",
-            gap: 20,
-          }}
-        >
-          <Box width={"100%"} style={{ borderRadius: "10px" }}>
-            <Box
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                backgroundColor: "#FFF",
-                borderTopLeftRadius: "10px",
-                borderTopRightRadius: "10px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                style={{ padding: "20px", fontWeight: "bold" }}
-              >
-                Page visits
-              </Typography>
-              <Button
-                style={{
-                  textTransform: "capitalize",
-                  color: "#FFF",
-                  backgroundColor: "#1D2030",
-                  marginRight: "20px",
-                  borderRadius: "10px",
-                }}
-              >
-                See All
-              </Button>
-            </Box>
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
-                <TableHead style={{ backgroundColor: "#F2F4F6" }}>
-                  <TableRow>
-                    <TableCell>Page Name</TableCell>
-                    <TableCell align="right">Page Views</TableCell>
-                    <TableCell align="right">Page Value</TableCell>
-                    <TableCell align="right">Bounce rate</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row) => (
-                    <TableRow key={row.Name}>
-                      <TableCell component="th" scope="row">
-                        {row.Name}
-                      </TableCell>
-                      <TableCell align="right">{row.View}</TableCell>
-                      <TableCell align="right">{row.Value}</TableCell>
-                      <TableCell align="right">{row.Rate}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-          <Box style={{ display: "flex", gap: 20 }}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-              }}
-            >
-              <Box
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  style={{ padding: "20px", fontWeight: "bold" }}
-                >
-                  Team members
-                </Typography>
-                <Button
-                  style={{
-                    textTransform: "capitalize",
-                    color: "#FFF",
-                    backgroundColor: "#1D2030",
-                    marginRight: "20px",
-                    borderRadius: "10px",
-                  }}
-                >
-                  See All
-                </Button>
-              </Box>
-              <Divider />
-              <Box>
-                {teamMembers.map((profile, index) => (
-                  <>
-                    <Box
-                      style={{
-                        padding: "10px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Box style={{ display: "flex", alignItems: "center" }}>
-                        <img
-                          src="https://demo.themesberg.com/volt-pro-react/static/media/profile-picture-1.508e07ee.jpg"
-                          alt="img"
-                          style={{
-                            width: "35px",
-                            height: "35px",
-                            borderRadius: "10px",
-                            marginRight: "10px",
-                          }}
-                        />
+      <MainSalesBox>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12} lg={8}>
+            <SubSalesBox>
+              <PageVisitMainBox>
+                <PageVisitSubBox>
+                  <PageVisitTitle variant="h6">Page visits</PageVisitTitle>
+                  <PageVisitButton>See All</PageVisitButton>
+                </PageVisitSubBox>
+                <TableContainer component={Paper}>
+                  <Table aria-label="simple table">
+                    <PageVisitHeadTitle>
+                      <TableRow>
+                        <TableCell>Page Name</TableCell>
+                        <TableCell align="right">Page Views</TableCell>
+                        <TableCell align="right">Page Value</TableCell>
+                        <TableCell align="right">Bounce rate</TableCell>
+                      </TableRow>
+                    </PageVisitHeadTitle>
+                    <TableBody>
+                      {rows.map((row) => (
+                        <TableRow key={row.Name}>
+                          <TableCell component="th" scope="row">
+                            {row.Name}
+                          </TableCell>
+                          <TableCell align="right">{row.View}</TableCell>
+                          <TableCell align="right">{row.Value}</TableCell>
+                          <TableCell align="right">{row.Rate}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </PageVisitMainBox>
+              <TeamMemberMainBox>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={12} lg={6}>
+                    <TeamMemberSubBox>
+                      <TeamMemberTitleBox>
+                        <TopAuthorTitle variant="h6">
+                          Team members
+                        </TopAuthorTitle>
+                        <PageVisitButton>See All</PageVisitButton>
+                      </TeamMemberTitleBox>
+                      <Divider />
+                      <Box>
+                        {teamMembers.map((profile, index) => (
+                          <>
+                            <TopAuthorBox>
+                              <TeamMemberBox>
+                                <TeamMemberImg
+                                  src="https://demo.themesberg.com/volt-pro-react/static/media/profile-picture-1.508e07ee.jpg"
+                                  alt="img"
+                                />
 
-                        <Box>
-                          <Typography>{profile.name}</Typography>
-                          <Typography variant="body2">
-                            <Box
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "flex-start",
-                              }}
-                            >
-                              <FiberManualRecordSharp
-                                style={{
-                                  fontSize: "small",
-                                  color: statusColors[profile.status] || "red",
-                                }}
-                              />
-                              {profile.status}
-                            </Box>
-                          </Typography>
-                        </Box>
+                                <Box>
+                                  <Typography>{profile.name}</Typography>
+                                  <Typography variant="body2">
+                                    <TeamMemberStatusBox>
+                                      <FiberManualRecordSharp
+                                        style={{
+                                          fontSize: "small",
+                                          color:
+                                            statusColors[profile.status] ||
+                                            "red",
+                                        }}
+                                      />
+                                      {profile.status}
+                                    </TeamMemberStatusBox>
+                                  </Typography>
+                                </Box>
+                              </TeamMemberBox>
+                              <Box>{profile.action}</Box>
+                            </TopAuthorBox>
+                            {index < teamMembers.length - 1 && (
+                              <TopAuthorDivider />
+                            )}
+                          </>
+                        ))}
                       </Box>
-                      <Box>{profile.action}</Box>
-                    </Box>
-                    {index < teamMembers.length - 1 && (
-                      <Divider style={{ margin: "0px 10px 0px 10px" }} />
-                    )}
-                  </>
-                ))}
-              </Box>
-            </Box>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-              }}
-            >
-              <Box
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  style={{ padding: "20px", fontWeight: "bold" }}
-                >
-                  Progress track
-                </Typography>
-                <Button
-                  style={{
-                    textTransform: "capitalize",
-                    color: "#FFF",
-                    backgroundColor: "#1D2030",
-                    marginRight: "20px",
-                    borderRadius: "10px",
-                  }}
-                >
-                  See Tasks
-                </Button>
-              </Box>
-              <Divider />
-              <Box>
-                {teamProgress.map((profile, index) => (
-                  <>
-                    <Box
-                      style={{
-                        padding: "10px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        margin: "10px 0 10px 0",
-                      }}
-                    >
-                      <Assignment />
+                    </TeamMemberSubBox>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={6}>
+                    <TeamMemberSubBox>
+                      <TeamMemberTitleBox>
+                        <TopAuthorTitle variant="h6">
+                          Progress track
+                        </TopAuthorTitle>
+                        <PageVisitButton>See Tasks</PageVisitButton>
+                      </TeamMemberTitleBox>
+                      <Divider />
+                      <Box>
+                        {teamProgress.map((profile, index) => (
+                          <>
+                            <ProgressMainBox>
+                              <Assignment />
+                              <ProgressBox>
+                                <NotificationMainBox>
+                                  <Typography variant="body2">
+                                    {profile.name}
+                                  </Typography>
+                                  <Typography variant="body2">
+                                    {profile.barPer}
+                                  </Typography>
+                                </NotificationMainBox>
+                                <ProgressBar
+                                  variant="determinate"
+                                  value={profile.value}
+                                  barColor={profile.color}
+                                />
+                              </ProgressBox>
+                            </ProgressMainBox>
+                            {index < teamProgress.length - 1 && (
+                              <TopAuthorDivider />
+                            )}
+                          </>
+                        ))}
+                      </Box>
+                    </TeamMemberSubBox>
+                  </Grid>
+                </Grid>
+              </TeamMemberMainBox>
+              <TeamMemberMainBox>
+                <TeamMemberSubBox>
+                  <TopAuthorTitle variant="h6">Events</TopAuthorTitle>
 
-                      <Box
-                        width={"100%"}
-                        marginRight={"10px"}
-                        marginLeft={"10px"}
-                      >
-                        <Box
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "row",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Typography variant="body2">
-                            {profile.name}
-                          </Typography>
-                          <Typography variant="body2">
-                            {profile.barPer}
-                          </Typography>
-                        </Box>
-                        <ProgressBar
-                          variant="determinate"
-                          value={profile.value}
-                          barColor={profile.color}
-                        />
-                      </Box>
-                    </Box>
-                    {index < teamProgress.length - 1 && (
-                      <Divider style={{ margin: "0px 10px 0px 10px" }} />
-                    )}
-                  </>
-                ))}
-              </Box>
-            </Box>
-          </Box>
-          <Box style={{ display: "flex", gap: 20 }}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-              }}
-            >
-              <Typography
-                variant="h6"
-                style={{ padding: "20px", fontWeight: "bold" }}
-              >
-                Events
-              </Typography>
+                  <Divider />
+                  <Box>
+                    {eventData.map((profile, index) => (
+                      <>
+                        <TopAuthorBox>
+                          <TeamMemberBox>
+                            <EventBox>
+                              <EventMainBox>{profile.month}</EventMainBox>
+                              <EventSubBox>{profile.day}</EventSubBox>
+                            </EventBox>
 
-              <Divider />
-              <Box>
-                {eventData.map((profile, index) => (
-                  <>
-                    <Box
-                      style={{
-                        padding: "10px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Box style={{ display: "flex", alignItems: "center" }}>
-                        <Box
-                          style={{ borderRadius: "10px", marginLeft: "20px" }}
-                        >
-                          <Box
-                            style={{
-                              backgroundColor: "#E11D48",
-                              color: "#FFF",
-                              width: "50px",
-                              height: "20px",
-                              borderTopRightRadius: "10px",
-                              borderTopLeftRadius: "10px",
-                              alignItems: "center",
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            {profile.month}
-                          </Box>
-                          <Box
-                            style={{
-                              backgroundColor: "#F2F4F6",
-                              width: "50px",
-                              height: "40px",
-                              borderBottomRightRadius: "10px",
-                              borderBottomLeftRadius: "10px",
-                              alignItems: "center",
-                              display: "flex",
-                              justifyContent: "center",
-                              fontSize: "20px",
-                            }}
-                          >
-                            {profile.day}
-                          </Box>
-                        </Box>
-
-                        <Box style={{ marginLeft: "50px" }}>
-                          <Typography variant="h5">{profile.title}</Typography>
-                          <Typography variant="body1">
-                            {profile.organizedBy}
-                          </Typography>
-                          <Typography variant="body1">
-                            {profile.time}
-                          </Typography>
-                          <Typography variant="body1">
-                            {profile.place}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                    {index < teamMembers.length - 1 && (
-                      <Divider style={{ margin: "0px 10px 0px 10px" }} />
-                    )}
-                  </>
-                ))}
-              </Box>
-              <Divider />
-              <Button
-                style={{
-                  textTransform: "capitalize",
-                  padding: "15px 0 15px 0",
-                }}
-              >
-                <Visibility style={{ marginRight: "5px" }} />
-                View All
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          style={{
-            display: "flex",
-            flex: 1,
-            backgroundColor: "#F5F8FB",
-            borderRadius: "10px",
-            flexDirection: "column",
-            gap: "20px",
-          }}
-        >
-          <Box style={{ display: "flex", gap: 20, width: "100%" }}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-              }}
-            >
-              <Box>
-                {globalRank.map((profile, index) => (
-                  <>
-                    <Box
-                      style={{
-                        padding: "10px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Box style={{ display: "flex" }}>
-                        {profile.icon}
-
-                        <Box style={{ marginLeft: "10px" }}>
-                          <Typography>{profile.name}</Typography>
-                          <Typography variant="body2">
-                            <Box
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "flex-start",
-                              }}
-                            >
-                              {profile.details}
-                            </Box>
-                          </Typography>
-                        </Box>
-                      </Box>
-                      <Box>{profile.position}</Box>
-                    </Box>
-                    {index < globalRank.length - 1 && (
-                      <Divider style={{ margin: "0px 10px 0px 10px" }} />
-                    )}
-                  </>
-                ))}
-              </Box>
-            </Box>
-          </Box>
-          <Box style={{ display: "flex", gap: 20, width: "100%" }}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-              }}
-            >
-              <Box>
-                <Box style={{ padding: "20px 20px 15px 20px" }}>
-                  <Typography variant="h6" style={{ fontWeight: "bold" }}>
-                    Acquisition
-                  </Typography>
-                  <Typography variant="body2">
-                    Tells you where your visitors originated from, such as
-                    search engines, social networks or website referrals.
-                  </Typography>
-                </Box>
-                {AcquisitionData.map((profile) => (
-                  <Box
-                    key={profile.id}
-                    style={{
-                      padding: "10px",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Box style={{ display: "flex", alignItems: "center" }}>
-                      <Box
-                        style={{
-                          backgroundColor: profile.iconBg,
-                          height: "50px",
-                          width: "50px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          borderRadius: "10px",
-                        }}
-                      >
-                        {profile.icon}
-                      </Box>
-                      <Box marginLeft={"10px"}>
-                        <Typography>{profile.title}</Typography>
-                        <Typography variant="body2">
-                          <Box
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                              fontSize: "20px",
-                            }}
-                          >
-                            {profile.data}
-                          </Box>
-                        </Typography>
-                      </Box>
-                    </Box>
+                            <EventDataBox>
+                              <Typography variant="h5">
+                                {profile.title}
+                              </Typography>
+                              <Typography variant="body1">
+                                {profile.organizedBy}
+                              </Typography>
+                              <Typography variant="body1">
+                                {profile.time}
+                              </Typography>
+                              <Typography variant="body1">
+                                {profile.place}
+                              </Typography>
+                            </EventDataBox>
+                          </TeamMemberBox>
+                        </TopAuthorBox>
+                        {index < teamMembers.length - 1 && <TopAuthorDivider />}
+                      </>
+                    ))}
                   </Box>
-                ))}
-              </Box>
-            </Box>
-          </Box>
-          <Box style={{ display: "flex", gap: 20, width: "100%" }}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-              }}
-            >
-              <Box
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  style={{ padding: "20px", fontWeight: "bold" }}
-                >
-                  Visits past 30 days by country
-                </Typography>
-              </Box>
-              <Divider />
-              <Box>
-                {CountryProgress.map((profile, index) => (
-                  <>
-                    <Box
-                      style={{
-                        padding: "10px",
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        margin: "10px 0 10px 0",
-                      }}
-                    >
-                      <img
-                        src={profile.imgPath}
-                        alt="profile"
-                        style={{ width: "30px", height: "30px" }}
-                      />
+                  <Divider />
+                  <EventViewButton>
+                    <NotificationViewIcon />
+                    View All
+                  </EventViewButton>
+                </TeamMemberSubBox>
+              </TeamMemberMainBox>
+            </SubSalesBox>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={4}>
+            <ThirdSalesBox>
+              <GlobalRankMainBox>
+                <TeamMemberSubBox>
+                  <Box>
+                    {globalRank.map((profile, index) => (
+                      <>
+                        <TopAuthorBox>
+                          <GlobalRankBox>
+                            {profile.icon}
+                            <GlobalRankSubBox>
+                              <Typography>{profile.name}</Typography>
+                              <Typography variant="body2">
+                                <TeamMemberStatusBox>
+                                  {profile.details}
+                                </TeamMemberStatusBox>
+                              </Typography>
+                            </GlobalRankSubBox>
+                          </GlobalRankBox>
+                          <Box>{profile.position}</Box>
+                        </TopAuthorBox>
+                        {index < globalRank.length - 1 && <TopAuthorDivider />}
+                      </>
+                    ))}
+                  </Box>
+                </TeamMemberSubBox>
+              </GlobalRankMainBox>
 
-                      <Box
-                        width={"100%"}
-                        marginRight={"10px"}
-                        marginLeft={"10px"}
-                      >
-                        <Box
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "row",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Typography
-                            variant="body2"
+              <GlobalRankMainBox>
+                <TeamMemberSubBox>
+                  <Box>
+                    <AcquisitionBox>
+                      <ChartCurrentText variant="h6">
+                        Acquisition
+                      </ChartCurrentText>
+                      <Typography variant="body2">
+                        Tells you where your visitors originated from, such as
+                        search engines, social networks or website referrals.
+                      </Typography>
+                    </AcquisitionBox>
+                    {AcquisitionData.map((profile) => (
+                      <TopAuthorBox key={profile.id}>
+                        <TeamMemberBox>
+                          <Box
                             style={{
+                              backgroundColor: profile.iconBg,
+                              height: "50px",
+                              width: "50px",
                               display: "flex",
-                              gap: "10px",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              borderRadius: "10px",
                             }}
                           >
-                            {profile.name}{" "}
-                            <Typography
-                              variant="body2"
-                              style={{ color: "gray" }}
-                            >
-                              {profile.data}
+                            {profile.icon}
+                          </Box>
+                          <GlobalRankSubBox>
+                            <Typography>{profile.title}</Typography>
+                            <Typography variant="body2">
+                              <AcquisitionSubBox>
+                                {profile.data}
+                              </AcquisitionSubBox>
                             </Typography>
-                          </Typography>
-                          <Typography variant="body2">
-                            {profile.barPer}
-                          </Typography>
-                        </Box>
-                        <ProgressBar
-                          variant="determinate"
-                          value={profile.value}
-                          barColor={profile.color}
-                        />
-                      </Box>
-                    </Box>
-                    {index < CountryProgress.length - 1 && (
-                      <Divider style={{ margin: "0px 10px 0px 10px" }} />
-                    )}
-                  </>
-                ))}
-              </Box>
-              <Divider />
-              <Button
-                style={{
-                  textTransform: "capitalize",
-                  padding: "15px 0 15px 0",
-                }}
-              >
-                <Visibility style={{ marginRight: "5px" }} />
-                View All
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
+                          </GlobalRankSubBox>
+                        </TeamMemberBox>
+                      </TopAuthorBox>
+                    ))}
+                  </Box>
+                </TeamMemberSubBox>
+              </GlobalRankMainBox>
+
+              <GlobalRankMainBox>
+                <TeamMemberSubBox>
+                  <NotificationMainBox>
+                    <TopAuthorTitle variant="h6">
+                      Visits past 30 days by country
+                    </TopAuthorTitle>
+                  </NotificationMainBox>
+                  <Divider />
+                  <Box>
+                    {CountryProgress.map((profile, index) => (
+                      <>
+                        <ProgressMainBox>
+                          <VisitImage src={profile.imgPath} alt="profile" />
+
+                          <ProgressBox>
+                            <NotificationMainBox>
+                              <VisitProfileName variant="body2">
+                                {profile.name}{" "}
+                                <VisitProfileData variant="body2">
+                                  {profile.data}
+                                </VisitProfileData>
+                              </VisitProfileName>
+                              <Typography variant="body2">
+                                {profile.barPer}
+                              </Typography>
+                            </NotificationMainBox>
+                            <ProgressBar
+                              variant="determinate"
+                              value={profile.value}
+                              barColor={profile.color}
+                            />
+                          </ProgressBox>
+                        </ProgressMainBox>
+                        {index < CountryProgress.length - 1 && (
+                          <TopAuthorDivider />
+                        )}
+                      </>
+                    ))}
+                  </Box>
+                  <Divider />
+                  <EventViewButton>
+                    <NotificationViewIcon />
+                    View All
+                  </EventViewButton>
+                </TeamMemberSubBox>
+              </GlobalRankMainBox>
+            </ThirdSalesBox>
+          </Grid>
+        </Grid>
+      </MainSalesBox>
     </Layout>
   );
 }

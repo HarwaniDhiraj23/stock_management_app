@@ -20,6 +20,7 @@ import {
   TextFieldStyled,
   TypoTitle,
 } from "../utility/Styles/CommonStyles.tsx";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
 
 const ResetPassword: React.FC = () => {
   const location = useLocation();
@@ -51,13 +52,17 @@ const ResetPassword: React.FC = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     resetForm();
-    await userService.resetPassword({
-      email: values.email,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-      token: token,
-    });
-    navigate(RoutePaths.SignIn);
+    try {
+      await userService.resetPassword({
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+        token: token,
+      });
+      navigate(RoutePaths.SignIn);
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
   };
 
   const SubmitButton = styled(Button)({

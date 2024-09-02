@@ -305,6 +305,7 @@ export const CountryProgress = [
 
 export const steps = [
   {
+    id: 1,
     icon: (
       <Box style={{ display: "flex", alignItems: "center" }}>
         <Box
@@ -328,6 +329,7 @@ export const steps = [
     days: "a day ago",
   },
   {
+    id: 2,
     icon: (
       <Box style={{ display: "flex", alignItems: "center" }}>
         <Box
@@ -352,6 +354,7 @@ export const steps = [
     days: "a day ago",
   },
   {
+    id: 3,
     icon: (
       <Box style={{ display: "flex", alignItems: "center" }}>
         <Box
@@ -375,6 +378,7 @@ export const steps = [
     days: "a day ago",
   },
   {
+    id: 4,
     icon: (
       <Box style={{ display: "flex", alignItems: "center" }}>
         <Box

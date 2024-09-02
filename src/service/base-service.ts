@@ -7,6 +7,7 @@ axios.interceptors.request.use(
   async (config: any) => {
     let isTokenRequired = true;
     if (config.url.includes("/Auth/refresh-token")) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       isTokenRequired = false;
     }
     if (config.url && !config.url.includes(BASE_URL)) {
@@ -50,6 +51,7 @@ axios.interceptors.response.use(
         break;
       default:
     }
+
     return Promise.reject(error);
   }
 );

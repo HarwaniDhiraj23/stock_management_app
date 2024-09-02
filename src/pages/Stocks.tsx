@@ -35,6 +35,8 @@ import {
 import Layout from "../common_component/Layout.tsx";
 import StockApi from "../service/stock-service.ts";
 import SimpleDialog from "../common_component/StockDialog.tsx";
+import { handleRedirect } from "../utility/helper/handleRedirect.ts";
+import { useNavigate } from "react-router-dom";
 
 interface Data {
   name: string;
@@ -248,6 +250,7 @@ interface EnhancedTableToolbarProps {
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+  const navigate = useNavigate();
   const classes = useToolbarStyles();
   const [open, setOpen] = useState(false);
   const {
@@ -277,11 +280,14 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     const data = {
       id: [selectedId],
     };
-
-    await StockApi.deleteMultipleStocks(data);
-    clearSelectedId();
-    clearAllSelectedId();
-    fetchData();
+    try {
+      await StockApi.deleteMultipleStocks(data);
+      clearSelectedId();
+      clearAllSelectedId();
+      fetchData();
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
   };
   const HeaderTitle = styled(Typography)({
     flex: "1",
@@ -390,6 +396,7 @@ interface Data {
   low_price: number;
 }
 export default function Stocks() {
+  const navigate = useNavigate();
   const classes = useStyles();
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Data>("name");
@@ -501,8 +508,12 @@ export default function Stocks() {
   const handleDeleteStocks = async (id) => {
     setAnchorEl(null);
     setSelectedRow(null);
-    await StockApi.deleteStock(id);
-    fetchData();
+    try {
+      await StockApi.deleteStock(id);
+      fetchData();
+    } catch (error) {
+      handleRedirect(error, navigate);
+    }
   };
 
   const fetchData = async () => {
@@ -510,7 +521,7 @@ export default function Stocks() {
       const getStock: any = await StockApi.getStocks();
       setStockData(getStock.data?.data);
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      handleRedirect(error, navigate);
     }
   };
 
