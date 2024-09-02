@@ -101,6 +101,68 @@ const ProgressBar = styled(LinearProgress)(({ barColor }: any) => ({
   },
 }));
 
+const SubBox = styled(Box)({
+  gap: 10,
+  marginLeft: "10px",
+  marginRight: "10px",
+  marginTop: "20px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const SalesBox = styled(Box)({
+  display: "flex",
+  gap: 10,
+  margin: "10px",
+});
+const SalesMainBox = styled(Box)({
+  backgroundColor: "#FFFFFF",
+  borderRadius: "10px",
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+  height: "600px",
+});
+const SalesTitle = styled(Typography)({
+  paddingLeft: "20px",
+  paddingTop: "10px",
+});
+const SalesAvgTitle = styled(Typography)({
+  paddingLeft: "20px",
+  paddingBottom: "10px",
+});
+const ChartSubBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  margin: "10px 0px 10px 10px",
+});
+const SalesDataMainBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column",
+  flex: 1,
+});
+const SalesButton = styled(Button)({
+  color: "white",
+  backgroundColor: "#1D2030",
+});
+const ChartBox2 = styled(Box)({
+  display: "flex",
+  alignItems: "left",
+  justifyContent: "center",
+  flexDirection: "column",
+  marginLeft: "10px",
+});
+const ChartCurrentText = styled(Typography)({
+  fontWeight: "bold",
+});
+const ChartDayText = styled(Typography)({
+  fontSize: "11px",
+});
+
 function Dashboard() {
   const [showSales, setSales] = useState<any>([]);
   const [alignment, setAlignment] = useState<string>("day");
@@ -215,52 +277,26 @@ function Dashboard() {
         </HeaderBox>
         <LineChart data={data} chartType="line" labels={true} />
       </MainBox>
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="center"
-        style={{
-          gap: 10,
-          marginLeft: "10px",
-          marginRight: "10px",
-          marginTop: "20px",
-        }}
-      >
+      <SubBox style={{}}>
         <Grid container spacing={2}>
           {[1, 2, 3].map((index) => (
             <Grid item xs={12} sm={12} md={6} lg={4} xl={2} key={index}>
               <ChartBox>
-                <Box
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "10px 0px 10px 10px",
-                  }}
-                >
+                <ChartSubBox>
                   <LineChart
                     data={generateBarData(index)}
                     chartType="line"
                     labels={false}
                     style={{ width: "150px" }}
                   />
-                </Box>
-                <Box
-                  style={{
-                    display: "flex",
-                    alignItems: "left",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    marginLeft: "10px",
-                  }}
-                >
-                  <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                </ChartSubBox>
+                <ChartBox2>
+                  <ChartCurrentText variant="h6">
                     ${showSales[index]?.current_value}
-                  </Typography>
-                  <Typography style={{ fontSize: "11px" }}>
+                  </ChartCurrentText>
+                  <ChartDayText>
                     {showSales[index]?.day[0]}-{showSales[index]?.day[9]}
-                  </Typography>
+                  </ChartDayText>
                   <StockStatus style={{ fontSize: "13px" }}>
                     <StatusSpan status={showSales[index]?.status}>
                       {showSales[index]?.status === "high" ? (
@@ -271,94 +307,37 @@ function Dashboard() {
                       {showSales[index]?.average}%
                     </StatusSpan>
                   </StockStatus>
-                </Box>
+                </ChartBox2>
               </ChartBox>
             </Grid>
           ))}
         </Grid>
-      </Box>
-      <Box margin={"10px"} style={{ display: "flex", gap: 10 }}>
+      </SubBox>
+      <SalesBox>
         <Grid container spacing={2} style={{ marginTop: "20px" }}>
           <Grid item xs={12} sm={12} md={4}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-                height: "600px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                style={{ paddingLeft: "20px", paddingTop: "10px" }}
-              >
-                Weekly Sales
-              </Typography>
-              <Typography
-                variant="body2"
-                style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-              >
-                28 Daily Avg.
-              </Typography>
+            <SalesMainBox>
+              <SalesTitle variant="h6">Weekly Sales</SalesTitle>
+              <SalesAvgTitle variant="body2">28 Daily Avg.</SalesAvgTitle>
               <Divider />
-              <Box
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  flex: 1,
-                }}
-              >
-                <Box
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    flex: "1",
-                  }}
-                >
+              <SalesDataMainBox>
+                <SalesDataMainBox>
                   <Typography variant="h3" style={{ fontWeight: "bold" }}>
                     $456,678
                   </Typography>
                   <Typography variant="body1">
                     Total Themesberg Sales
                   </Typography>
-                  <Button
-                    variant="contained"
-                    style={{ color: "white", backgroundColor: "#1D2030" }}
-                  >
-                    Generate Report
-                  </Button>
-                </Box>
-                <Box
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    flex: "1",
-                  }}
-                >
+                  <SalesButton variant="contained">Generate Report</SalesButton>
+                </SalesDataMainBox>
+                <SalesDataMainBox>
                   <LineChart data={data} chartType="bar" labels={false} />
-                </Box>
-              </Box>
-            </Box>
+                </SalesDataMainBox>
+              </SalesDataMainBox>
+            </SalesMainBox>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-                height: "600px",
-              }}
-            >
+            <SalesMainBox>
               <Typography
                 variant="h6"
                 style={{ padding: "20px", fontWeight: "bold" }}
@@ -407,19 +386,10 @@ function Dashboard() {
                   </>
                 ))}
               </Box>
-            </Box>
+            </SalesMainBox>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <Box
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-                height: "600px",
-              }}
-            >
+            <SalesMainBox>
               <Box
                 style={{
                   display: "flex",
@@ -463,10 +433,10 @@ function Dashboard() {
                   </Step>
                 ))}
               </Stepper>
-            </Box>
+            </SalesMainBox>
           </Grid>
         </Grid>
-      </Box>
+      </SalesBox>
       <Box
         style={{
           margin: "20px 10px 10px 10px",
